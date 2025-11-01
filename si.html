@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Origin SD→HD</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0d0d0d;
+      color: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      background: #1c1c1c;
+      padding: 20px 30px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 15px #000;
+    }
+    input {
+      width: 120px;
+      padding: 5px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      background: #333;
+      color: #eee;
+      text-align: center;
+    }
+    button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #2a6df4;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { background: #1f54bb; }
+    #out {
+      margin-top: 15px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #00ff88;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Calcular Origin SD→HD</h2>
+    <input id="sd" type="text" placeholder="SD ej: 33x25">
+    <input id="hd" type="text" placeholder="HD ej: 65x57"><br>
+    <button onclick="calc()">Calcular</button>
+    <div id="out"></div>
+  </div>
+
+  <script>
+    function calc() {
+      const sdVal = document.getElementById("sd").value.trim().toLowerCase();
+      const hdVal = document.getElementById("hd").value.trim().toLowerCase();
+      const out = document.getElementById("out");
+
+      const sd = sdVal.split("x").map(Number);
+      const hd = hdVal.split("x").map(Number);
+      if (sd.length !== 2 || hd.length !== 2 || sd.some(isNaN) || hd.some(isNaN)) {
+        out.textContent = "⚠️ Formato inválido (ej: 33x25)";
+        return;
+      }
+
+      const [sdx, sdy] = sd;
+      const [hdx, hdy] = hd;
+
+      // Duplicar SD
+      const sdx2 = sdx * 2;
+      const sdy2 = sdy * 2;
+
+      // Diferencia y ajuste
+      const adjX = (hdx - sdx2) / 2;
+      const adjY = (hdy - sdy2) / 2;
+
+      // Redondear
+      const roundX = Math.round(adjX);
+      const roundY = Math.round(adjY);
+
+      // Mostrar resultado tipo "-1x4"
+      out.textContent = `${roundX}x${roundY}`;
+    }
+  </script>
+</body>
+</html>
